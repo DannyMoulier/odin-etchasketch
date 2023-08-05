@@ -2,25 +2,32 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh
+    min-height: 100vh;
+    gap: 30px;
 }
 
 #box-container {
-    display: flex;
     border-color: black;
     border-style: solid;
-    height: 700px;
-    width: 700px;
+    flex-grow: 0;
     flex-shrink: 0;
-    flex-wrap: wrap;
-
+    /* flex-basis: 700px;
+    height: 700px; */
 }
 
-.box{
+.row{
+    display: flex;
+}
+
+.column{
+    box-sizing: border-box;
     border-color: black;
+    border-width: 1px;
     border-style: solid;
-    height: 37.75px;
-    width: 37.75px;
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 
-
+.hover-effect{
+    background-color: black;
+}

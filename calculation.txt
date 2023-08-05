@@ -1,0 +1,2 @@
+the size of each square should be 100/(size of grid) = size in %
+for example: if we have an 16*16 feid, the size of each squre should be 100/(16*16) = 0.390625%
