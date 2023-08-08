@@ -1,7 +1,7 @@
 // Set the number of rows and columns for the board
 let numberOfRows = 16;
 let numberOfColumns = numberOfRows;
-let sizeOfField = 700;
+let sizeOfField = 600;
 
 // Function to create the field container
 function createField(sizeOfField) {
@@ -48,13 +48,16 @@ function drawOnBoard() {
 let field = createField(sizeOfField);
 createBoard(numberOfRows, numberOfColumns, field);
 
+const slider = document.querySelector("#boxSizeSlider");
+const output = document.getElementById("demo");
 
-// Add event listener to the "box count" button
+output.innerHTML = slider.value; // Display the default slider value
 const boxCountButton = document.querySelector('#box-count');
-boxCountButton.addEventListener('click', function(e) {
 
-    // Prompt the user to choose the number of rows
-    numberOfRows = Number(prompt("Please choose size"));
+
+slider.oninput = function() {
+    output.innerHTML = this.value;
+    numberOfRows = parseInt(output.innerHTML)
     numberOfColumns = numberOfRows;
 
     // TODO: You might want to update the board based on the new size here
@@ -66,7 +69,52 @@ boxCountButton.addEventListener('click', function(e) {
     createBoard(numberOfRows, numberOfColumns, field);
 
     drawOnBoard();
+}
 
-});
+const clearButton = document.getElementById("clear-button");
+clearButton.onclick = function() {
+    const fieldContents = document.querySelectorAll('.row');
+    fieldContents.forEach(content => {
+        content.remove();
+    })
+    let field = createField(sizeOfField);
+    createBoard(numberOfRows, numberOfColumns, field);
+
+    drawOnBoard();
+}
+
+
 
 drawOnBoard();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// boxCountButton.addEventListener('click', function(e) {
+
+//     // Prompt the user to choose the number of rows
+//     numberOfRows = Number(prompt("Please choose size"));
+//     numberOfColumns = numberOfRows;
+
+//     // TODO: You might want to update the board based on the new size here
+//     const fieldContents = document.querySelectorAll('.row');
+//     fieldContents.forEach(content => {
+//         content.remove();
+//     })
+//     let field = createField(sizeOfField);
+//     createBoard(numberOfRows, numberOfColumns, field);
+
+//     drawOnBoard();
+
+// });

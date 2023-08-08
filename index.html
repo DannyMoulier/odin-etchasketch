@@ -10,7 +10,12 @@
 </head>
 <body>
     <div id='controls-container'>
-        <button id='box-count'>Change box count</button>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="100" value="16" class="slider" id="boxSizeSlider">
+            <p> <span id="demo"></span></p>
+          </div>
+        <button id="clear-button">Clear</button>
+        <button id="eraser-button">Eraser</button>
     </div>
     <div id='box-container'>
     </div>
@@ -24,9 +29,7 @@
 
 
 
-
-
-
+        <!-- <button id='box-count'>Change box count</button> -->
 
 
 
