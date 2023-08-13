@@ -83,38 +83,9 @@ clearButton.onclick = function() {
     drawOnBoard();
 }
 
+const hoverEffect = document.getElementsByClassName("hover-effect")
+hoverEffect.style.backgroundColor = 'white';
+
 
 
 drawOnBoard();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// boxCountButton.addEventListener('click', function(e) {
-
-//     // Prompt the user to choose the number of rows
-//     numberOfRows = Number(prompt("Please choose size"));
-//     numberOfColumns = numberOfRows;
-
-//     // TODO: You might want to update the board based on the new size here
-//     const fieldContents = document.querySelectorAll('.row');
-//     fieldContents.forEach(content => {
-//         content.remove();
-//     })
-//     let field = createField(sizeOfField);
-//     createBoard(numberOfRows, numberOfColumns, field);
-
-//     drawOnBoard();
-
-// });
