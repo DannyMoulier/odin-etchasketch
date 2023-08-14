@@ -28,21 +28,50 @@ function createBoard(numberOfRows, numberOfcolumns, field) {
             row.append(newColumn);
         }
     });
-}
 
-// Function to enable drawing on the board
-function drawOnBoard() {
     const columns = document.querySelectorAll('.column');
 
     // Set column sizes and attach hover-effect on mouseover
     columns.forEach(column => {
         column.style.flexBasis = `${sizeOfField / numberOfRows}px`;
         column.style.height = `${sizeOfField / numberOfColumns}px`;
-        column.addEventListener('mouseover', function() {
-            this.classList.add('hover-effect');
-        });
     });
 }
+
+// Function to enable drawing on the board
+function drawOnBoard() {
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+    const columns = document.querySelectorAll('.column');
+    let isEraseClicked = true;
+    let isRainbowClicked = true;
+
+    columns.forEach(column => {
+        column.addEventListener('mouseover', function() {
+            if (isEraseClicked) {
+                column.classList.add('hover-effect');
+            } else if (!isEraseClicked){
+                column.classList.remove('hover-effect');
+            } else if (isRainbowClicked) {
+                column.style.backgroundColor = `rgb(170, 0, 0)`;
+            };
+        });
+    });
+
+    const eraseButton = document.getElementById("eraser-button");
+    const rainbowButton = document.getElementById("rainbow-button");
+
+    // Add a click event listener to switch between draw and erase modes
+    eraseButton.addEventListener('click', function() {
+        isEraseClicked = !isEraseClicked; // Toggle the draw/erase mode
+    });
+
+    rainbowButton.addEventListener('click', function() {
+        isRainbowClicked = !isRainbowClicked; // Toggle the draw/erase mode
+    });
+}
+
 
 // Create the field and board
 let field = createField(sizeOfField);
@@ -83,8 +112,8 @@ clearButton.onclick = function() {
     drawOnBoard();
 }
 
-const hoverEffect = document.getElementsByClassName("hover-effect")
-hoverEffect.style.backgroundColor = 'white';
+// const hoverEffect = document.getElementsByClassName("hover-effect")
+// hoverEffect.style.backgroundColor = 'white';
 
 
 
