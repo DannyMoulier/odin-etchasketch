@@ -27,5 +27,9 @@ body {
 }
 
 .hover-effect {
-  background-color: black;
+  background-color: rgb(0, 0, 0);
+}
+
+.rainbow-hover-effect {
+    background-color: var(--hover-color);
 }

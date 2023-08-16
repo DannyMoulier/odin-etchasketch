@@ -43,32 +43,44 @@ function drawOnBoard() {
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
     }
+
     const columns = document.querySelectorAll('.column');
-    let isEraseClicked = true;
-    let isRainbowClicked = true;
+    let isEraseClicked = false; // Start with erase mode OFF
+    let isRainbowClicked = false;
 
     columns.forEach(column => {
         column.addEventListener('mouseover', function() {
             if (isEraseClicked) {
-                column.classList.add('hover-effect');
-            } else if (!isEraseClicked){
+                // column.classList.remove('hover-effect');
                 column.classList.remove('hover-effect');
-            } else if (isRainbowClicked) {
-                column.style.backgroundColor = `rgb(170, 0, 0)`;
-            };
+                column.classList.remove('rainbow-hover-effect');
+            } else {
+                column.classList.add('hover-effect');
+            }
+
+            if (isRainbowClicked && !isEraseClicked) {
+                // column.style.backgroundColor = `rgb(${getRandomInt(256)}, ${getRandomInt(256)}, ${getRandomInt(256)})`;
+                column.classList.add('rainbow-hover-effect');
+                column.style.setProperty('--hover-color', `rgb(${getRandomInt(256)}, ${getRandomInt(256)}, ${getRandomInt(256)})`);
+            }
         });
     });
 
     const eraseButton = document.getElementById("eraser-button");
     const rainbowButton = document.getElementById("rainbow-button");
 
-    // Add a click event listener to switch between draw and erase modes
     eraseButton.addEventListener('click', function() {
-        isEraseClicked = !isEraseClicked; // Toggle the draw/erase mode
+        isEraseClicked = !isEraseClicked;
+        if (isEraseClicked) {
+            isRainbowClicked = false;
+        }
     });
 
     rainbowButton.addEventListener('click', function() {
-        isRainbowClicked = !isRainbowClicked; // Toggle the draw/erase mode
+        isRainbowClicked = !isRainbowClicked;
+        if (isRainbowClicked) {
+            isEraseClicked = false;
+        }
     });
 }
 
