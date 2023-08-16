@@ -5,7 +5,7 @@ let sizeOfField = 600;
 
 // Function to create the field container
 function createField(sizeOfField) {
-    const boxContainer = document.querySelector('#box-container');
+    const boxContainer = document.querySelector("#box-container");
     boxContainer.style.flexBasis = `${sizeOfField}px`;
     boxContainer.style.height = `${sizeOfField}px`;
     return boxContainer;
@@ -14,25 +14,25 @@ function createField(sizeOfField) {
 // Function to create the game board with rows and columns
 function createBoard(numberOfRows, numberOfcolumns, field) {
     for (let i = 0; i < numberOfRows; i++) {
-        const newRow = document.createElement('div');
-        newRow.classList.add('row');
+        const newRow = document.createElement("div");
+        newRow.classList.add("row");
         field.append(newRow);
     }
 
-    const rows = document.querySelectorAll('.row');
+    const rows = document.querySelectorAll(".row");
     // Create columns within each row
-    rows.forEach(row => {
+    rows.forEach((row) => {
         for (let i = 0; i < numberOfcolumns; i++) {
-            const newColumn = document.createElement('div');
-            newColumn.classList.add('column');
+            const newColumn = document.createElement("div");
+            newColumn.classList.add("column");
             row.append(newColumn);
         }
     });
 
-    const columns = document.querySelectorAll('.column');
+    const columns = document.querySelectorAll(".column");
 
     // Set column sizes and attach hover-effect on mouseover
-    columns.forEach(column => {
+    columns.forEach((column) => {
         column.style.flexBasis = `${sizeOfField / numberOfRows}px`;
         column.style.height = `${sizeOfField / numberOfColumns}px`;
     });
@@ -44,24 +44,22 @@ function drawOnBoard() {
         return Math.floor(Math.random() * max);
     }
 
-    const columns = document.querySelectorAll('.column');
+    const columns = document.querySelectorAll(".column");
     let isEraseClicked = false; // Start with erase mode OFF
     let isRainbowClicked = false;
 
-    columns.forEach(column => {
-        column.addEventListener('mouseover', function() {
+    columns.forEach((column) => {
+        column.addEventListener("mouseover", function () {
             if (isEraseClicked) {
-                // column.classList.remove('hover-effect');
-                column.classList.remove('hover-effect');
-                column.classList.remove('rainbow-hover-effect');
+                column.classList.remove("hover-effect");
+                column.classList.remove("rainbow-hover-effect");
             } else {
-                column.classList.add('hover-effect');
+                column.classList.add("hover-effect");
             }
 
             if (isRainbowClicked && !isEraseClicked) {
-                // column.style.backgroundColor = `rgb(${getRandomInt(256)}, ${getRandomInt(256)}, ${getRandomInt(256)})`;
-                column.classList.add('rainbow-hover-effect');
-                column.style.setProperty('--hover-color', `rgb(${getRandomInt(256)}, ${getRandomInt(256)}, ${getRandomInt(256)})`);
+                column.classList.add("rainbow-hover-effect");
+                column.style.setProperty("--hover-color",`rgb(${getRandomInt(256)}, ${getRandomInt(256)}, ${getRandomInt(256)})`);
             }
         });
     });
@@ -69,21 +67,20 @@ function drawOnBoard() {
     const eraseButton = document.getElementById("eraser-button");
     const rainbowButton = document.getElementById("rainbow-button");
 
-    eraseButton.addEventListener('click', function() {
+    eraseButton.addEventListener("click", function () {
         isEraseClicked = !isEraseClicked;
         if (isEraseClicked) {
             isRainbowClicked = false;
         }
     });
 
-    rainbowButton.addEventListener('click', function() {
+    rainbowButton.addEventListener("click", function () {
         isRainbowClicked = !isRainbowClicked;
         if (isRainbowClicked) {
             isEraseClicked = false;
         }
     });
 }
-
 
 // Create the field and board
 let field = createField(sizeOfField);
@@ -93,40 +90,37 @@ const slider = document.querySelector("#boxSizeSlider");
 const output = document.getElementById("demo");
 
 output.innerHTML = slider.value; // Display the default slider value
-const boxCountButton = document.querySelector('#box-count');
+const boxCountButton = document.querySelector("#box-count");
 
-
-slider.oninput = function() {
+slider.oninput = function () {
     output.innerHTML = this.value;
-    numberOfRows = parseInt(output.innerHTML)
+    numberOfRows = parseInt(output.innerHTML);
     numberOfColumns = numberOfRows;
 
     // TODO: You might want to update the board based on the new size here
-    const fieldContents = document.querySelectorAll('.row');
-    fieldContents.forEach(content => {
+    const fieldContents = document.querySelectorAll(".row");
+    fieldContents.forEach((content) => {
         content.remove();
-    })
+    });
     let field = createField(sizeOfField);
     createBoard(numberOfRows, numberOfColumns, field);
 
     drawOnBoard();
-}
+};
 
 const clearButton = document.getElementById("clear-button");
-clearButton.onclick = function() {
-    const fieldContents = document.querySelectorAll('.row');
-    fieldContents.forEach(content => {
+clearButton.onclick = function () {
+    const fieldContents = document.querySelectorAll(".row");
+    fieldContents.forEach((content) => {
         content.remove();
-    })
+    });
     let field = createField(sizeOfField);
     createBoard(numberOfRows, numberOfColumns, field);
 
     drawOnBoard();
-}
+};
 
 // const hoverEffect = document.getElementsByClassName("hover-effect")
 // hoverEffect.style.backgroundColor = 'white';
-
-
 
 drawOnBoard();
