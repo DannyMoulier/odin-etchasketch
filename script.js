@@ -75,15 +75,19 @@ function drawOnBoard() {
 
     eraseButton.addEventListener("click", function () {
         isEraseClicked = !isEraseClicked;
+        eraseButton.classList.toggle('clicked');
         if (isEraseClicked) {
             isRainbowClicked = false;
+            // eraseButton.classList.toggle('clicked');
         }
     });
 
     rainbowButton.addEventListener("click", function () {
         isRainbowClicked = !isRainbowClicked;
+        rainbowButton.classList.toggle('clicked');
         if (isRainbowClicked) {
             isEraseClicked = false;
+            rainbowButton.classList.toggle('clicked');
         }
     });
 }
