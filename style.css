@@ -26,10 +26,10 @@ body {
     flex-shrink: 0;
 }
 
-.hover-effect {
-    background-color: rgb(0, 0, 0);
+.color-hover-effect {
+    background-color: var(--hover-color);
 }
 
 .rainbow-hover-effect {
-    background-color: var(--hover-color);
+    background-color: var(--hover-rainbow);
 }

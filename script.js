@@ -51,15 +51,21 @@ function drawOnBoard() {
     columns.forEach((column) => {
         column.addEventListener("mouseover", function () {
             if (isEraseClicked) {
-                column.classList.remove("hover-effect");
+                column.classList.remove("color-hover-effect");
                 column.classList.remove("rainbow-hover-effect");
             } else {
-                column.classList.add("hover-effect");
+                column.classList.remove("color-hover-effect");
+                column.classList.remove("rainbow-hover-effect");
+                let color = document.getElementById("color-picker").value;
+                column.classList.add("color-hover-effect");
+                column.style.setProperty("--hover-color", `${color}`)
             }
 
             if (isRainbowClicked && !isEraseClicked) {
+                column.classList.remove("color-hover-effect");
+                column.classList.remove("rainbow-hover-effect");
                 column.classList.add("rainbow-hover-effect");
-                column.style.setProperty("--hover-color",`rgb(${getRandomInt(256)}, ${getRandomInt(256)}, ${getRandomInt(256)})`);
+                column.style.setProperty("--hover-rainbow", `rgb(${getRandomInt(256)}, ${getRandomInt(256)}, ${getRandomInt(256)})`);
             }
         });
     });
