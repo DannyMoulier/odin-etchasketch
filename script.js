@@ -1,41 +1,54 @@
-// Set the number of rows and columns for the board
-let numberOfRows = 16;
-let numberOfColumns = numberOfRows;
-let sizeOfField = 600;
-
-// Function to create the field container
-function createField(sizeOfField) {
-    const boxContainer = document.querySelector("#box-container");
-    boxContainer.style.flexBasis = `${sizeOfField}px`;
-    boxContainer.style.height = `${sizeOfField}px`;
-    return boxContainer;
-}
-
 // Function to create the game board with rows and columns
-function createBoard(numberOfRows, numberOfcolumns, field) {
-    for (let i = 0; i < numberOfRows; i++) {
-        const newRow = document.createElement("div");
-        newRow.classList.add("row");
-        field.append(newRow);
-    }
+function createBoard() {
+    const slider = document.querySelector("#boxSizeSlider");
+    const output = document.getElementById("demo");
+    const field = document.querySelector("#box-container");
+    let sizeOfField = 600;
 
-    const rows = document.querySelectorAll(".row");
-    // Create columns within each row
-    rows.forEach((row) => {
-        for (let i = 0; i < numberOfcolumns; i++) {
-            const newColumn = document.createElement("div");
-            newColumn.classList.add("column");
-            row.append(newColumn);
+    output.innerHTML = slider.value;
+
+    slider.onchange = function () {
+        output.innerHTML = this.value;
+        updateBoard(parseInt(this.value));
+    };
+
+    function updateBoard(newNumberOfRows) {
+        field.innerHTML = ""; // Clear the existing content
+
+        let numberOfColumns = newNumberOfRows;
+
+        field.style.flexBasis = `${sizeOfField}px`;
+        field.style.height = `${sizeOfField}px`;
+
+        for (let i = 0; i < newNumberOfRows; i++) {
+            const newRow = document.createElement("div");
+            newRow.classList.add("row");
+            field.append(newRow);
         }
-    });
 
-    const columns = document.querySelectorAll(".column");
+        const rows = document.querySelectorAll(".row");
 
-    // Set column sizes and attach hover-effect on mouseover
-    columns.forEach((column) => {
-        column.style.flexBasis = `${sizeOfField / numberOfRows}px`;
-        column.style.height = `${sizeOfField / numberOfColumns}px`;
-    });
+        rows.forEach((row) => {
+            for (let i = 0; i < numberOfColumns; i++) {
+                const newColumn = document.createElement("div");
+                newColumn.classList.add("column");
+                row.append(newColumn);
+            }
+        });
+
+        const columns = document.querySelectorAll(".column");
+
+        // Set column sizes and attach hover-effect on mouseover
+        columns.forEach((column) => {
+            column.style.flexBasis = `${sizeOfField / newNumberOfRows}px`;
+            column.style.height = `${sizeOfField / numberOfColumns}px`;
+        });
+
+        drawOnBoard();
+    }
+    // Initialize the board
+    const initialNumberOfRows = parseInt(output.innerHTML);
+    updateBoard(initialNumberOfRows);
 }
 
 // Function to enable drawing on the board
@@ -54,145 +67,91 @@ function drawOnBoard() {
             if (isEraseClicked) {
                 column.classList.remove("color-hover-effect");
                 column.classList.remove("rainbow-hover-effect");
-            } else if (isColorClicked){
+            } else if (isColorClicked) {
                 column.classList.remove("color-hover-effect");
                 column.classList.remove("rainbow-hover-effect");
                 let color = document.getElementById("color-picker").value;
                 column.classList.add("color-hover-effect");
-                column.style.setProperty("--hover-color", `${color}`)
+                column.style.setProperty("--hover-color", `${color}`);
             }
             if (isRainbowClicked && !isEraseClicked) {
                 column.classList.remove("color-hover-effect");
                 column.classList.remove("rainbow-hover-effect");
                 column.classList.add("rainbow-hover-effect");
-                column.style.setProperty("--hover-rainbow", `rgb(${getRandomInt(256)}, ${getRandomInt(256)}, ${getRandomInt(256)})`);
+                column.style.setProperty(
+                    "--hover-rainbow",
+                    `rgb(${getRandomInt(256)}, ${getRandomInt(
+                        256
+                    )}, ${getRandomInt(256)})`
+                );
             }
         });
     });
 
-    const eraseButton = document.getElementById("eraser-button");
-    const rainbowButton = document.getElementById("rainbow-button");
-    const clearButton = document.getElementById("clear-button");
     const colorButton = document.getElementById("color-button");
+    const rainbowButton = document.getElementById("rainbow-button");
+    const eraseButton = document.getElementById("eraser-button");
+    const clearButton = document.getElementById("clear-button");
+    const slider = document.getElementById("boxSizeSlider");
 
-    colorButton.classList.add('clicked');
+    colorButton.classList.add("clicked");
 
     colorButton.addEventListener("click", function () {
-        colorButton.classList.add('clicked');
+        colorButton.classList.add("clicked");
         isColorClicked = true;
         if (isEraseClicked || isRainbowClicked) {
             isRainbowClicked = false;
-            rainbowButton.classList.remove('clicked');
+            rainbowButton.classList.remove("clicked");
             isEraseClicked = false;
-            eraseButton.classList.remove('clicked');
+            eraseButton.classList.remove("clicked");
         }
-    })
+    });
 
     eraseButton.addEventListener("click", function () {
         isEraseClicked = true;
-        eraseButton.classList.add('clicked');
+        eraseButton.classList.add("clicked");
         if (isEraseClicked) {
             isRainbowClicked = false;
-            rainbowButton.classList.remove('clicked');
+            rainbowButton.classList.remove("clicked");
             isColorClicked = false;
-            colorButton.classList.remove('clicked');
-
+            colorButton.classList.remove("clicked");
         }
     });
 
     rainbowButton.addEventListener("click", function () {
         isRainbowClicked = true;
-        rainbowButton.classList.add('clicked');
+        rainbowButton.classList.add("clicked");
         if (isRainbowClicked) {
             isEraseClicked = false;
-            eraseButton.classList.remove('clicked');
+            eraseButton.classList.remove("clicked");
             isColorClicked = false;
-            colorButton.classList.remove('clicked');
+            colorButton.classList.remove("clicked");
         }
     });
 
     clearButton.onclick = function () {
         if (isEraseClicked) {
             isRainbowClicked = false;
-            rainbowButton.classList.remove('clicked');
+            rainbowButton.classList.remove("clicked");
         }
         if (isRainbowClicked) {
             isEraseClicked = false;
-            eraseButton.classList.remove('clicked');
+            eraseButton.classList.remove("clicked");
         }
         columns.forEach((column) => {
             column.classList.remove("color-hover-effect");
             column.classList.remove("rainbow-hover-effect");
+        });
+    };
+
+    slider.oninput = function () {
+        if (isEraseClicked || isRainbowClicked) {
+            isRainbowClicked = false;
+            rainbowButton.classList.remove("clicked");
+            isEraseClicked = false;
+            eraseButton.classList.remove("clicked");
         }
-    )
+    };
 };
 
-slider.onchange = function () {
-        output.innerHTML = this.value;
-        numberOfRows = parseInt(output.innerHTML);
-        numberOfColumns = numberOfRows;
-
-        // TODO: You might want to update the board based on the new size here
-        const fieldContents = document.querySelectorAll(".row");
-        fieldContents.forEach((content) => {
-            content.remove();
-        });
-        let field = createField(sizeOfField);
-        createBoard(numberOfRows, numberOfColumns, field);
-        drawOnBoard();
-    };
-}
-
-
-function editBoxSize() {
-
-    const slider = document.querySelector("#boxSizeSlider");
-    const output = document.getElementById("demo");
-
-    output.innerHTML = slider.value; // Display the default slider value
-    const boxCountButton = document.querySelector("#box-count");
-
-    slider.onchange = function () {
-
-        output.innerHTML = this.value;
-
-        let newNumberOfRows;
-        let newNumberOfColumns;
-
-        newNumberOfRows = parseInt(output.innerHTML);
-        newNumberOfColumns = newNumberOfRows;
-
-
-        if (newNumberOfRows < numberOfRows) {
-
-        } 
-        else if (newNumberOfRows > newNumberOfRows) {
-            
-        }
-
-
-        // TODO: You might want to update the board based on the new size here
-        const fieldContents = document.querySelectorAll(".row");
-        fieldContents.forEach((content) => {
-            content.remove();
-        });
-        let field = createField(sizeOfField);
-        createBoard(numberOfRows, numberOfColumns, field);
-        drawOnBoard();
-    };
-}
-
-// Create the field and board
-let field = createField(sizeOfField);
-createBoard(numberOfRows, numberOfColumns, field);
-
-const slider = document.querySelector("#boxSizeSlider");
-const output = document.getElementById("demo");
-
-output.innerHTML = slider.value; // Display the default slider value
-const boxCountButton = document.querySelector("#box-count");
-
-// const hoverEffect = document.getElementsByClassName("hover-effect")
-// hoverEffect.style.backgroundColor = 'white';
-
-drawOnBoard();
+createBoard();
