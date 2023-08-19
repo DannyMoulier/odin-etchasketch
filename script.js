@@ -47,20 +47,20 @@ function drawOnBoard() {
     const columns = document.querySelectorAll(".column");
     let isEraseClicked = false; // Start with erase mode OFF
     let isRainbowClicked = false;
+    let isColorClicked = true;
 
     columns.forEach((column) => {
         column.addEventListener("mouseover", function () {
             if (isEraseClicked) {
                 column.classList.remove("color-hover-effect");
                 column.classList.remove("rainbow-hover-effect");
-            } else {
+            } else if (isColorClicked){
                 column.classList.remove("color-hover-effect");
                 column.classList.remove("rainbow-hover-effect");
                 let color = document.getElementById("color-picker").value;
                 column.classList.add("color-hover-effect");
                 column.style.setProperty("--hover-color", `${color}`)
             }
-
             if (isRainbowClicked && !isEraseClicked) {
                 column.classList.remove("color-hover-effect");
                 column.classList.remove("rainbow-hover-effect");
@@ -72,24 +72,114 @@ function drawOnBoard() {
 
     const eraseButton = document.getElementById("eraser-button");
     const rainbowButton = document.getElementById("rainbow-button");
+    const clearButton = document.getElementById("clear-button");
+    const colorButton = document.getElementById("color-button");
+
+    colorButton.classList.add('clicked');
+
+    colorButton.addEventListener("click", function () {
+        colorButton.classList.add('clicked');
+        isColorClicked = true;
+        if (isEraseClicked || isRainbowClicked) {
+            isRainbowClicked = false;
+            rainbowButton.classList.remove('clicked');
+            isEraseClicked = false;
+            eraseButton.classList.remove('clicked');
+        }
+    })
 
     eraseButton.addEventListener("click", function () {
-        isEraseClicked = !isEraseClicked;
-        eraseButton.classList.toggle('clicked');
+        isEraseClicked = true;
+        eraseButton.classList.add('clicked');
         if (isEraseClicked) {
             isRainbowClicked = false;
-            // eraseButton.classList.toggle('clicked');
+            rainbowButton.classList.remove('clicked');
+            isColorClicked = false;
+            colorButton.classList.remove('clicked');
+
         }
     });
 
     rainbowButton.addEventListener("click", function () {
-        isRainbowClicked = !isRainbowClicked;
-        rainbowButton.classList.toggle('clicked');
+        isRainbowClicked = true;
+        rainbowButton.classList.add('clicked');
         if (isRainbowClicked) {
             isEraseClicked = false;
-            rainbowButton.classList.toggle('clicked');
+            eraseButton.classList.remove('clicked');
+            isColorClicked = false;
+            colorButton.classList.remove('clicked');
         }
     });
+
+    clearButton.onclick = function () {
+        if (isEraseClicked) {
+            isRainbowClicked = false;
+            rainbowButton.classList.remove('clicked');
+        }
+        if (isRainbowClicked) {
+            isEraseClicked = false;
+            eraseButton.classList.remove('clicked');
+        }
+        columns.forEach((column) => {
+            column.classList.remove("color-hover-effect");
+            column.classList.remove("rainbow-hover-effect");
+        }
+    )
+};
+
+slider.onchange = function () {
+        output.innerHTML = this.value;
+        numberOfRows = parseInt(output.innerHTML);
+        numberOfColumns = numberOfRows;
+
+        // TODO: You might want to update the board based on the new size here
+        const fieldContents = document.querySelectorAll(".row");
+        fieldContents.forEach((content) => {
+            content.remove();
+        });
+        let field = createField(sizeOfField);
+        createBoard(numberOfRows, numberOfColumns, field);
+        drawOnBoard();
+    };
+}
+
+
+function editBoxSize() {
+
+    const slider = document.querySelector("#boxSizeSlider");
+    const output = document.getElementById("demo");
+
+    output.innerHTML = slider.value; // Display the default slider value
+    const boxCountButton = document.querySelector("#box-count");
+
+    slider.onchange = function () {
+
+        output.innerHTML = this.value;
+
+        let newNumberOfRows;
+        let newNumberOfColumns;
+
+        newNumberOfRows = parseInt(output.innerHTML);
+        newNumberOfColumns = newNumberOfRows;
+
+
+        if (newNumberOfRows < numberOfRows) {
+
+        } 
+        else if (newNumberOfRows > newNumberOfRows) {
+            
+        }
+
+
+        // TODO: You might want to update the board based on the new size here
+        const fieldContents = document.querySelectorAll(".row");
+        fieldContents.forEach((content) => {
+            content.remove();
+        });
+        let field = createField(sizeOfField);
+        createBoard(numberOfRows, numberOfColumns, field);
+        drawOnBoard();
+    };
 }
 
 // Create the field and board
@@ -101,34 +191,6 @@ const output = document.getElementById("demo");
 
 output.innerHTML = slider.value; // Display the default slider value
 const boxCountButton = document.querySelector("#box-count");
-
-slider.oninput = function () {
-    output.innerHTML = this.value;
-    numberOfRows = parseInt(output.innerHTML);
-    numberOfColumns = numberOfRows;
-
-    // TODO: You might want to update the board based on the new size here
-    const fieldContents = document.querySelectorAll(".row");
-    fieldContents.forEach((content) => {
-        content.remove();
-    });
-    let field = createField(sizeOfField);
-    createBoard(numberOfRows, numberOfColumns, field);
-
-    drawOnBoard();
-};
-
-const clearButton = document.getElementById("clear-button");
-clearButton.onclick = function () {
-    const fieldContents = document.querySelectorAll(".row");
-    fieldContents.forEach((content) => {
-        content.remove();
-    });
-    let field = createField(sizeOfField);
-    createBoard(numberOfRows, numberOfColumns, field);
-
-    drawOnBoard();
-};
 
 // const hoverEffect = document.getElementsByClassName("hover-effect")
 // hoverEffect.style.backgroundColor = 'white';
