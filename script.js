@@ -152,6 +152,6 @@ function drawOnBoard() {
             eraseButton.classList.remove("clicked");
         }
     };
-};
+}
 
 createBoard();
