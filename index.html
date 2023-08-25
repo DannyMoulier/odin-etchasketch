@@ -9,26 +9,35 @@
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <div id="controls-container">
-            <div id="color-picker-container">
-                <input id="color-picker" type="color" />
-            </div>
-            <button id="color-button">Color mode</button>
-            <button id="rainbow-button">Rainbow</button>
-            <button id="eraser-button">Eraser</button>
-            <button id="clear-button">Clear</button>
-            <div id="slider-container">
-                <input
-                    type="range"
-                    min="1"
-                    max="100"
-                    value="16"
-                    class="slider"
-                    id="boxSizeSlider"
-                />
-                <p><span id="demo"></span></p>
-            </div>
+        <div id="top">
+            <div id="title">ETCH A SKETCH</div>
         </div>
-        <div id="box-container"></div>
+        <div id="middle">
+            <div id="controls-container">
+                <div id="color-picker-container">
+                    <input id="color-picker" type="color" />
+                </div>
+                <button id="color-button">Color mode</button>
+                <button id="rainbow-button">Rainbow</button>
+                <button id="eraser-button">Eraser</button>
+                <button id="clear-button">Clear</button>
+                <div id="slider-container">
+                    <input
+                        type="range"
+                        min="1"
+                        max="100"
+                        value="16"
+                        class="slider"
+                        id="boxSizeSlider"
+                    />
+                    <p><span id="demo"></span></p>
+                </div>
+            </div>
+            <div id="box-container"></div>
+        </div>
+        <div id="bottom">
+            <div id="credits">Danny Moulier</div>
+            <a href="https://github.com/DannyMoulier"><img id="github" src="./icons/github-mark-white.svg" alt="Github Icon"></a>
+        </div>
     </body>
 </html>
