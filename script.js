@@ -1,16 +1,16 @@
 // Function to create the game board with rows and columns
 function createBoard() {
     const slider = document.querySelector("#boxSizeSlider");
-    const output = document.getElementById("demo");
+    const output = document.querySelector(".slider-output");
     const field = document.querySelector("#box-container");
     let sizeOfField = 600;
 
-    output.innerHTML = slider.value;
+    output.textContent = slider.value;
 
-    slider.onchange = function () {
-        output.innerHTML = this.value;
-        updateBoard(parseInt(this.value));
-    };
+    slider.addEventListener("input", () => {
+        output.textContent = slider.value;
+        updateBoard(parseInt(slider.value));
+    });
 
     function updateBoard(newNumberOfRows) {
         field.innerHTML = ""; // Clear the existing content
@@ -144,14 +144,14 @@ function drawOnBoard() {
         });
     };
 
-    slider.oninput = function () {
+    slider.addEventListener("input", () => {
         if (isEraseClicked || isRainbowClicked) {
             isRainbowClicked = false;
             rainbowButton.classList.remove("clicked");
             isEraseClicked = false;
             eraseButton.classList.remove("clicked");
         }
-    };
+    });
 }
 
 createBoard();
