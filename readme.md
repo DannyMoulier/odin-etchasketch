@@ -28,11 +28,7 @@ The Etch-a-Sketch project is a web-based drawing application that allows users t
 1. Open the `index.html` file in a web browser.
 2. Use the controls on the left side to customize your drawing experience.
 3. Hover over the drawing board to create your masterpiece.
-4. Experiment with different modes and features.
-
-## Screenshots
-
-![Etch-a-Sketch Screenshot](/screenshots/etch-a-sketch.png)
+4. Experiment with different modes and features. 
 
 ## Installation
 
